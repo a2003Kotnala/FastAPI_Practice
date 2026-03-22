@@ -3,7 +3,7 @@ from pydantic import BaseModel, ValidationError, Field,AnyUrl,EmailStr,field_val
 from typing import Optional, List, Dict, Annotated
 
 class Patient(BaseModel):
-    name: str = Field(..., description="The name of the patient") 
+    name : Annotated[str,Field(..., description="The name of the patient"), examples=['P001']] 
     age: int = Field(..., description="The age of the patient", ge = 0)
     email: EmailStr
     linkedin_url: Annotated[Optional[AnyUrl],Field(None, description="The LinkedIn profile URL of the patient")]
