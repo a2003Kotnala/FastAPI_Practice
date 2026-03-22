@@ -1,9 +1,11 @@
 import asyncio
+from unicodedata import name
 from pydantic import BaseModel, ValidationError, Field,AnyUrl,EmailStr,field_validator,model_validator,computed_field
 from typing import Optional, List, Dict, Annotated
 
 class Patient(BaseModel):
-    name: str = Field(..., description="The name of the patient") 
+    id : Annotated[int, Field(..., description="The unique identifier of the patient", ge=1)]
+    name : Annotated[str,Field(..., description="The name of the patient")] 
     age: int = Field(..., description="The age of the patient", ge = 0)
     email: EmailStr
     linkedin_url: Annotated[Optional[AnyUrl],Field(None, description="The LinkedIn profile URL of the patient")]
@@ -51,6 +53,3 @@ try:
     insert_patient(patient)
 except ValidationError as e:
     print("Validation error:", e)
-
-
-    
